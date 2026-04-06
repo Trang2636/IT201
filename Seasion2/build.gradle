@@ -1,0 +1,22 @@
+plugins {
+    id 'java'
+    id 'war'
+}
+
+group 'org.example'
+version '1.0-SNAPSHOT'
+
+repositories {
+    mavenCentral()
+}
+
+sourceCompatibility = '21'
+targetCompatibility = '21'
+
+dependencies {
+    compileOnly('jakarta.servlet:jakarta.servlet-api:6.1.0')
+    implementation("org.springframework:spring-webmvc:7.0.6")
+    implementation("jakarta.servlet.jsp:jakarta.servlet.jsp-api:3.1.1")
+    implementation("jakarta.servlet.jsp.jstl:jakarta.servlet.jsp.jstl-api:3.0.2")
+    implementation("org.glassfish.web:jakarta.servlet.jsp.jstl:3.0.1")
+}

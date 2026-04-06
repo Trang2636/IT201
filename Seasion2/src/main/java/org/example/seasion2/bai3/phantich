@@ -1,0 +1,41 @@
+Thông báo lỗi đăng nhập chỉ cần tồn tại trong một lần request (khi submit form sai).
+
+Nếu lưu vào Request Scope:
+
+Dữ liệu chỉ tồn tại trong request hiện tại
+Khi reload trang → thông báo biến mất (đúng yêu cầu)
+
+Nếu lưu vào Session Scope:
+
+Thông báo sẽ tồn tại lâu dài
+Khi chuyển trang khác vẫn còn lỗi → gây nhầm lẫn cho người dùng
+
+ Kết luận:
+Request Scope phù hợp cho dữ liệu tạm thời, hiển thị một lần.
+
+2. Tại sao totalViewCount phải dùng Application Scope?
+
+Application Scope là dữ liệu dùng chung cho toàn bộ hệ thống.
+
+Nếu lưu vào Application Scope:
+
+Tất cả người dùng đều thấy cùng một giá trị
+Đúng yêu cầu: đếm tổng lượt xem toàn hệ thống
+
+Nếu lưu vào Session Scope:
+
+Mỗi người dùng có một bản riêng
+Ví dụ:
+User A: 3 lượt
+User B: 1 lượt
+→ sai yêu cầu
+
+Kết luận:
+Application Scope dùng cho dữ liệu toàn cục (shared).
+
+3. Race Condition là gì?
+
+Race Condition xảy ra khi:
+
+Nhiều request cùng truy cập và thay đổi cùng một biến
+Dẫn đến dữ liệu bị sai do tranh chấp

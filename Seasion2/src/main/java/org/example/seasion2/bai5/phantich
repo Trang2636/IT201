@@ -1,0 +1,67 @@
+1. Kiến trúc tổng thể của hệ thống
+
+Ứng dụng được xây dựng theo mô hình Spring MVC (Model – View – Controller), trong đó:
+
+Controller chịu trách nhiệm nhận request, kiểm tra session và điều hướng.
+Service xử lý logic nghiệp vụ (ví dụ: lấy danh sách nhân viên, tính tổng lương).
+View (JSP) chỉ dùng để hiển thị dữ liệu, không chứa logic Java.
+
+Nguyên tắc được áp dụng:
+
+Thin Controller: Controller không chứa logic phức tạp
+Thin View: JSP không dùng Scriptlet, chỉ dùng EL + JSTL
+2. Scope và quản lý dữ liệu
+
+Hệ thống sử dụng các scope như sau:
+
+Request Scope: dùng để lưu errorMessage khi đăng nhập sai → chỉ hiển thị 1 lần
+Session Scope: lưu thông tin đăng nhập (loggedUser, role) → dùng xuyên suốt phiên làm việc
+Application Scope: không dùng trong bài này vì không có dữ liệu toàn cục
+
+Nếu lưu sai scope:
+
+Lưu error vào Session → lỗi hiển thị lặp lại nhiều lần
+Không dùng Session → không giữ được trạng thái đăng nhập
+3. Xử lý xác thực (Authentication)
+
+Tại /login:
+
+Khi POST:
+Nếu đúng tài khoản → lưu vào session → redirect /employees
+Nếu sai → lưu lỗi vào request → forward lại login
+
+Việc sử dụng redirect sau login giúp tránh submit lại form khi refresh (PRG pattern).
+
+4. Kiểm tra đăng nhập (Session Check)
+
+Tại tất cả các API như /employees hoặc /employees/{code}:
+
+Phải kiểm tra session:
+Nếu chưa login → redirect /login
+
+Điều này đảm bảo bảo mật và tránh truy cập trái phép.
+
+5. Phân quyền (Authorization)
+
+Hệ thống có 2 role:
+
+hr_manager
+hr_staff
+
+Tại trang chi tiết nhân viên:
+
+Nếu role là hr_manager → hiển thị lương thật
+Nếu là hr_staff → hiển thị "***"
+
+Việc này được xử lý ở View bằng <c:if> dựa vào sessionScope.role.
+
+6. Xử lý dữ liệu và định dạng
+
+Dữ liệu được xử lý tại Service và Controller:
+
+Tổng lương phòng kỹ thuật được tính ở Service → không tính trong JSP
+JSP chỉ hiển thị:
+Tiền: dùng <fmt:formatNumber>
+Ngày: dùng <fmt:formatDate>
+
+Điều này đảm bảo đúng nguyên tắc “View không xử lý logic”.
