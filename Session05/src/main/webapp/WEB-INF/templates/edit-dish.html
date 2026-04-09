@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout/main-layout}">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<div layout:fragment="content">
+
+    <h2>Chỉnh sửa món ăn</h2>
+
+    <form th:object="${dish}">
+        ID:
+        <input type="text" th:field="*{id}" readonly />
+        <br><br>
+
+        Tên:
+        <input type="text" th:field="*{name}" />
+        <br><br>
+
+        Giá:
+        <input type="number" th:field="*{price}" />
+        <br><br>
+
+        Trạng thái:
+        <input type="checkbox" th:field="*{available}" /> Còn hàng
+        <br><br>
+
+        <button type="submit">Lưu</button>
+    </form>
+
+</div>
+</body>
+</html>
